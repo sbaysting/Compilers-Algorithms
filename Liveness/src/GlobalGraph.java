@@ -3,48 +3,46 @@ public class GlobalGraph
 {
 	public static void main(String... args)
 	{
-		GraphNode A = new GraphNode("A");
-		A.addDef("i");
+		GraphNode a = new GraphNode("a");
+		a.addDef("x");
 		
-		GraphNode B = new GraphNode("B");
-		B.addDef("j");
+		GraphNode b = new GraphNode("b");
+		b.addDef("y");
 		
-		GraphNode C = new GraphNode("C");
-		C.addDef("T1", "T2", "T3", "T4", "T21", "T22", "j");
-		C.addUse("i", "j", "n");
+		GraphNode c = new GraphNode("c");
 		
-		GraphNode D = new GraphNode("D");
-		D.addDef("i");
-		D.addUse("i", "n");
+		GraphNode d = new GraphNode("d");
+		d.addUse("x", "y");
 		
-		GraphNode E = new GraphNode("E");
-		E.addDef("i");
+		GraphNode e = new GraphNode("e");
+		e.addDef("c");
+		e.addUse("x", "y");
 		
-		GraphNode F = new GraphNode("F");
-		F.addDef("j");
+		GraphNode f = new GraphNode("f");
+		f.addDef("c");
+		f.addUse("x", "y");
 		
-		GraphNode G = new GraphNode("G");
-		G.addDef("k");
+		GraphNode g = new GraphNode("g");
+		g.addDef("z");
+		g.addUse("x", "y");
 		
-		GraphNode H = new GraphNode("H");
-		H.addDef("T4", "T5", "T6", "T7", "T8", "T9", "T24", "T10", "T11", "T12", "T13", "T25", "T14", "T15", "T16", "T17", "T18", "T19", "T26", "T20", "k");
-		H.addUse("i", "j", "n", "k");
+		GraphNode h = new GraphNode("h");
+		h.addUse("z");
 		
-		GraphNode I = new GraphNode("I");
-		I.addDef("j");
-		I.addUse("j", "n");
+		GraphNode i = new GraphNode("i");
+		i.addUse("a", "b", "c");
 		
-		GraphNode J = new GraphNode("J");
-		J.addDef("i");
-		J.addUse("i", "n");
+		// Add edges
 		
-		GraphNode K = new GraphNode("K");
-		
-		C.addSuccessor(C);
-		D.addSuccessor(B);
-		H.addSuccessor(H);
-		I.addSuccessor(G);
-		J.addSuccessor(F);
+		a.addSuccessor(b);
+		b.addSuccessor(c);
+		c.addSuccessor(d);
+		d.addSuccessor(e);
+		d.addSuccessor(f);
+		e.addSuccessor(h);
+		f.addSuccessor(g);
+		g.addSuccessor(h);
+		h.addSuccessor(i);
 		
 		Graph graph = new Graph();
 		graph.computeLiveness();

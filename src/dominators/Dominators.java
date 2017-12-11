@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
 
 import controlflow.CFGNode;
@@ -51,31 +52,43 @@ public class Dominators
 			{
 				init.add(entryNode);
 				doms.put(node, init);
+				System.out.println("Initialize Dom(" + node.getName() + ") = " + init);
 				continue;
 			}
 			init.addAll(graph.getNodes());
 			doms.put(node, init);
+			System.out.println("Initialize Dom(" + node.getName() + ") = " + init);
 		}
 		// Create worklist
 		Queue<CFGNode> wl = new LinkedList<CFGNode>();
 		Set<CFGNode> nodes = new TreeSet<>(graph.getNodes());
 		nodes.remove(entryNode);
-		wl.addAll(graph.getNodes());
+		wl.addAll(nodes);
 		// Run until no changes have occurred
 		while(!wl.isEmpty())
 		{
+			System.out.println("W = " + wl);
 			CFGNode n = wl.remove();
-			System.out.println("Got node " + n.getName());
+			//System.out.println("Got node " + n.getName());
 			Set<CFGNode> oldDom = doms.get(n);
-			System.out.println("Old dominators for node " + n.getName() + ": " + oldDom);
+			System.out.println("Dom_old(" + n.getName() + ") = " + oldDom);
 			Set<CFGNode> newDom = dom(n);
-			System.out.println("New dominators for node " + n.getName() + ": " + newDom);
+			String str = "";
+			for(AbstractGraphNode gn : n.getPredecessors())
+			{
+				str += "Dom(" + gn.getName() + ") ";
+			}
+			System.out.println("Dom(" + n.getName() + ") = [" + n.getName() + "] union( intersection( " + str + ") )");
+			System.out.println("Dom(" + n.getName() + ") = " + newDom);
 			doms.put(n, newDom);
 			if(!newDom.equals(oldDom))
 			{
-				System.out.println("Old doms didn't equal new doms! Adding node " + n.getName() + " back to list...");
+				System.out.println("Dom(" + n.getName() + ") changed! Adding successors to list...");
 				//wl.add(n);
-				n.getSuccessors().forEach( s -> wl.add((CFGNode)s) );
+				n.getSuccessors().forEach( s -> {
+					if(!wl.contains((CFGNode)s))
+						wl.add((CFGNode)s);
+				});
 			}
 		}
 		System.out.println("Converged!");

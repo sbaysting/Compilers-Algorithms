@@ -23,8 +23,8 @@ public abstract class GenericPrintableNode extends AbstractGraphNode
 	public int compareTo(AbstractGraphNode arg0) 
 	{
 		if(arg0.equals(this)) return 0;
-		if(arg0.getID() < this.getID()) return -1;
-		return 1;
+		if(arg0.getID() < this.getID()) return 1;
+		return -1;
 	}
 
 	@Override
