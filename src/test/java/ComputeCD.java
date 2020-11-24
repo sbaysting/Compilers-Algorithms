@@ -1,5 +1,3 @@
-package test;
-
 import controldependence.CDNode;
 import controldependence.ControlDependence;
 import controlflow.CFGNode;
