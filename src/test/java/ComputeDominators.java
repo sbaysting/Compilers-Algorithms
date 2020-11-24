@@ -1,5 +1,3 @@
-package test;
-
 import controlflow.CFGNode;
 import dominators.DomNode;
 import dominators.Dominators;
